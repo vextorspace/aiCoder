@@ -1,6 +1,8 @@
 #!/bin/sh
 
-echo "Running tests..."
+echo "Running new acceptance tests..."
+python developing_acceptance_tests.py
+echo "Running test suite...."
 python test_suite.py
 
 # Store the test result
