@@ -1,11 +1,11 @@
 import unittest
-from acceptance_tests import AcceptanceTests
+from developing_acceptance_tests import DevelopingAcceptanceTests
 
 def suite():
     suite = unittest.TestSuite()
     loader = unittest.TestLoader()
 
-    suite.addTests(loader.loadTestsFromTestCase(AcceptanceTests))
+    suite.addTests(loader.loadTestsFromTestCase(DevelopingAcceptanceTests))
 
     return suite
 
