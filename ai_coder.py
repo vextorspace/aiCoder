@@ -23,3 +23,13 @@ class TestAiCoder(unittest.TestCase):
         """
         diff = AiCoder().make_diff(code, test_results)
         assert(diff.strip().startswith("diff"))
+
+    def test_apply_diff_applies_diff_to_file(self):
+        diff = '''
+        diff --git a/example.py b/example.py
+        index e69de29..d95f3ad 100644
+        --- a/example.py
+        +++ b/example.py
+        @@ -0,0 +1 @@
+        +print("Hello, world!")
+        '''
