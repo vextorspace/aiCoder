@@ -52,3 +52,4 @@ class TestAi(unittest.TestCase):
         message = ai.get_code_diff("print('Hello World!')", "test failed because it should say Hello Hippo!")
         print(message)
         assert("hippo" in message.lower())
+        assert(message.startswith("diff"))
