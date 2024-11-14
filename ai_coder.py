@@ -8,9 +8,6 @@ class AiCoder:
         return "diff"
 
 class TestAiCoder(unittest.TestCase):
-    def setUp(self):
-        self.ai_coder = AiCoder()
-
     def test_ai_coder(self):
         self.assertTrue(self.ai_coder)
 
@@ -27,7 +24,7 @@ class TestAiCoder(unittest.TestCase):
             HelloWorld().print()
             ^^^^^^^^^^^^^^^^^^
         """
-        diff = self.ai_coder.make_diff(code, test_results)
+        diff = AiCoder().make_diff(code, test_results)
         assert(diff.strip().startswith("diff"))
 
     def tearDown(self):
