@@ -9,8 +9,15 @@ class AiCoder:
         return "diff"
 
     def apply_diff(self, temp_file, diff):
-        process = subprocess.Popen(['patch', temp_file.name], stdin=subprocess.PIPE)
-        process.communicate(input=diff.encode())
+        dry_run_process = subprocess.Popen(['patch', '--dry-run', temp_file.name], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        dry_run_stdout, dry_run_stderr = dry_run_process.communicate(input=diff.encode())
+
+        if dry_run_process.returncode != 0:
+            return False
+
+        # Apply the patch for real
+        process = subprocess.Popen(['patch', temp_file.name], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        stdout, stderr = process.communicate(input=diff.encode())
         return process.returncode == 0
 
 class TestAiCoder(unittest.TestCase):
