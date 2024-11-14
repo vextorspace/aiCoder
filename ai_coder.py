@@ -22,5 +22,4 @@ class TestAiCoder(unittest.TestCase):
             ^^^^^^^^^^^^^^^^^^
         """
         diff = AiCoder().make_diff(code, test_results)
-        assert(1 == 0)
         assert(diff.strip().startswith("diff"))
