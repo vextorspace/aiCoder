@@ -1,4 +1,5 @@
 import unittest
+import subprocess
 
 class AiCoder:
     def __init__(self):
@@ -6,6 +7,10 @@ class AiCoder:
 
     def make_diff(self, code, test_results):
         return "diff"
+
+    def apply_diff(self, temp_file, diff):
+        process = subprocess.Popen(['patch', temp_file.name], stdin=subprocess.PIPE)
+        process.communicate(input=diff.encode())
 
 class TestAiCoder(unittest.TestCase):
     def test_make_diff_returns_actual_diff(self):
@@ -36,3 +41,11 @@ class TestAiCoder(unittest.TestCase):
 
         temp_file = open('resources/example.py', 'w')
         temp_file.write("\n")
+
+        assistant = AiCoder()
+        assistant.apply_diff(temp_file, diff)
+
+        temp_file.close()
+        temp_file = open('resources/example.py', 'r')
+        contents = temp_file.read().strip()
+        assert(contents == "print(\"Hello, world!\")")
