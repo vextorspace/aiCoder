@@ -16,17 +16,15 @@ class Ai:
             openai_api_key=os.getenv("OPENAI_API_KEY")
         )
 
-    def get_commit_message(self, diff):
+    def get_code_diff(self, code, test_results):
         prompt_template = """
                             You are a terse and efficient developer.
-                            You only state the most important changes in commit messages.
-                            Each change should be on its own line.
-                            Each change message should be 50 characters or less.
-                            Try to keep each change message below 6 words if possible.
-                            An added or removed file should be mentioned in the message.
-                                the diff is: {diff}:
-
-                            Write a non-generic commit message. """
+                            You make code work with minimal fuss.
+                            You write short but descriptive names for functions.
+                            Your task is to create a diff that will patch the current file to make the tests pass.
+                               the current source file is: {code}
+                               the test results are: {test_results}
+                        """
 
         commit_prompt = ChatPromptTemplate.from_template(prompt_template)
 
@@ -34,7 +32,7 @@ class Ai:
         commit_chain = commit_prompt | self.llm
 
         # Run the chain
-        commit = commit_chain.invoke({"diff": diff})
+        commit = commit_chain.invoke({"code": code, "test_results": test_results})
         return commit.content.strip()
 
 class TestAi(unittest.TestCase):
@@ -44,5 +42,5 @@ class TestAi(unittest.TestCase):
 
     def test_get_commit_message(self):
         ai = Ai()
-        message = ai.get_commit_message("Can you say hippo?")
+        message = ai.get_code_diff("print('Hello World!')", "test failed because it should say Hello Hippo!")
         assert("hippo" in message.lower())
