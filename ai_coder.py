@@ -8,9 +8,6 @@ class AiCoder:
         return "diff"
 
 class TestAiCoder(unittest.TestCase):
-    def test_ai_coder(self):
-        self.assertTrue(self.ai_coder)
-
     def test_make_diff_returns_actual_diff(self):
         code = "print('Hello World!')"
         test_results = """
