@@ -33,3 +33,6 @@ class TestAiCoder(unittest.TestCase):
         @@ -0,0 +1 @@
         +print("Hello, world!")
         '''
+
+        temp_file = open('resources/example.py', 'w')
+        temp_file.write("\n")
