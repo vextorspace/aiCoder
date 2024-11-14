@@ -65,8 +65,6 @@ class TestAiCoder(unittest.TestCase):
         +print("Hello, world!")
         '''
 
-
-
         temp_file = open('resources/example2.py', 'w')
         temp_file.write("\n")
 
