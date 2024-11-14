@@ -1,12 +1,13 @@
 import unittest
 import subprocess
+from ai import Ai
 
 class AiCoder:
     def __init__(self):
         pass
 
     def make_diff(self, code, test_results):
-        return "diff"
+        return Ai().get_code_diff(code, test_results)
 
     def apply_diff(self, temp_file, diff):
         dry_run_process = subprocess.Popen(['patch', '--dry-run', temp_file.name], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
