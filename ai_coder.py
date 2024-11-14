@@ -80,5 +80,4 @@ class TestAiCoder(unittest.TestCase):
 
         temp_file.close()
 
-        print(f"Good Diff: {success}")
         assert(success == False)
