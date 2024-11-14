@@ -11,6 +11,7 @@ class AiCoder:
     def apply_diff(self, temp_file, diff):
         process = subprocess.Popen(['patch', temp_file.name], stdin=subprocess.PIPE)
         process.communicate(input=diff.encode())
+        return process.returncode == 0
 
 class TestAiCoder(unittest.TestCase):
     def test_make_diff_returns_actual_diff(self):
@@ -43,7 +44,7 @@ class TestAiCoder(unittest.TestCase):
         temp_file.write("\n")
 
         assistant = AiCoder()
-        assistant.apply_diff(temp_file, diff)
+        success = assistant.apply_diff(temp_file, diff)
 
         temp_file.close()
         temp_file = open('resources/example.py', 'r')
