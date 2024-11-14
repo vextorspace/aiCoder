@@ -54,3 +54,26 @@ class TestAiCoder(unittest.TestCase):
         temp_file = open('resources/example.py', 'r')
         contents = temp_file.read().strip()
         assert(contents == "print(\"Hello, world!\")")
+
+    def test_apply_diff_returns_false_on_error(self):
+        diff = '''
+        df --git a/example2.py b/example2.py
+        index e69de29..d95f3ad 100644
+        --- a/example2.py
+        +++ b/example2.py
+        -0,0 +1 @@
+        +print("Hello, world!")
+        '''
+
+
+
+        temp_file = open('resources/example2.py', 'w')
+        temp_file.write("\n")
+
+        assistant = AiCoder()
+        success = assistant.apply_diff(temp_file, diff)
+
+        temp_file.close()
+
+        print(f"Good Diff: {success}")
+        assert(success == False)
