@@ -21,9 +21,16 @@ class Ai:
                             You are a terse and efficient developer.
                             You make code work with minimal fuss.
                             You write short but descriptive names for functions.
+                            You will not write the output with code block markers.
                             Your task is to create a diff that will patch the current file to make the tests pass.
                                the current source file is: {code}
                                the test results are: {test_results}
+
+                            An example diff would be something like:
+                            diff
+                            @@ -1,3 +1,3 @@
+                            -print('Hello World!')
+                            +print('Hello Universe!')
                         """
 
         commit_prompt = ChatPromptTemplate.from_template(prompt_template)
