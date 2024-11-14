@@ -50,7 +50,9 @@ class TestAi(unittest.TestCase):
     def test_get_commit_message(self):
         ai = Ai()
         message = ai.get_code_diff("print('Hello World!')", "test failed because it should say Hello Hippo!")
+        print("----")
         print(message)
+        print("----")
         assert(message.startswith("diff"))
         assert("-print('Hello World!')" in message)
         assert("+print('Hello Hippo!')" in message)
