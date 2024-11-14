@@ -46,7 +46,11 @@ class TestAiCoder(unittest.TestCase):
         assistant = AiCoder()
         success = assistant.apply_diff(temp_file, diff)
 
+
         temp_file.close()
+
+        assert(success == True)
+
         temp_file = open('resources/example.py', 'r')
         contents = temp_file.read().strip()
         assert(contents == "print(\"Hello, world!\")")
