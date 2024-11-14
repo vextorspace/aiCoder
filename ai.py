@@ -21,6 +21,7 @@ class Ai:
                             You are a terse and efficient developer.
                             You make code work with minimal fuss.
                             You write short but descriptive names for functions.
+                            The output should not be surrounded by any quotes.
                             Your task is to create a diff that will patch the current file to make the tests pass.
                                the current source file is: {code}
                                the test results are: {test_results}
