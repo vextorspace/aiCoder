@@ -26,6 +26,3 @@ class TestAiCoder(unittest.TestCase):
         """
         diff = AiCoder().make_diff(code, test_results)
         assert(diff.strip().startswith("diff"))
-
-    def tearDown(self):
-        self.ai_coder = None
