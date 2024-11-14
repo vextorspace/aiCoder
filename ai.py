@@ -54,4 +54,3 @@ class TestAi(unittest.TestCase):
         assert(message.startswith("diff"))
         assert("-print('Hello World!')" in message)
         assert("+print('Hello Hippo!')" in message)
-        assert("hippo" in message.lower())
