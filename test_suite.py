@@ -1,5 +1,7 @@
 import unittest
 from ai_coder import TestAiCoder
+from ai_diff_gen import TestAiDiffGen
+
 import sys
 
 def suite():
@@ -7,7 +9,7 @@ def suite():
     loader = unittest.TestLoader()
 
     suite.addTests(loader.loadTestsFromTestCase(TestAiCoder))
-
+    suite.addTests(loader.loadTestsFromTestCase(TestAiDiffGen))
     return suite
 
 if __name__ == '__main__':
