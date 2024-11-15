@@ -50,10 +50,30 @@ class TestAi(unittest.TestCase):
     def test_get_commit_message(self):
         ai = Ai()
         message = ai.get_code_diff("print('Hello World!')", "test failed because it should say Hello Hippo!")
-        print("----")
-        print(message)
-        print("----")
 
         self.assertTrue(message.startswith("diff"), f"{message} does not start with 'diff'")
         self.assertIn("-print('Hello World!')", message)
         self.assertIn("+print('Hello Hippo!')", message)
+
+    def test_get_commit_message_realistic(self):
+        ai = Ai()
+        file = open("resources/Pello.py", "r")
+        code = file.read()
+        file.close()
+
+        test_results = """
+        (aimaster) vextorspace@vNitro:~/repos/aiCoder$ python resources/Pello.py
+        E
+        ======================================================================
+        ERROR: test_hello_world_prints (__main__.TestHelloWorld.test_hello_world_prints)
+        ----------------------------------------------------------------------
+        Traceback (most recent call last):
+          File "/home/vextorspace/repos/aiCoder/resources/Pello.py", line 13, in test_hello_world_prints
+            HelloWorld().print()
+            ^^^^^^^^^^^^^^^^^^
+        """
+        message = ai.get_code_diff(code, test_results)
+
+        self.assertTrue(message.startswith("diff"), f"{message} does not start with 'diff'")
+        self.assertIn("+    def print(self):", message)
+        self.assertIn("+        print(\"Hello World!\")", message)
