@@ -37,7 +37,9 @@ class DevelopingAcceptanceTests(unittest.TestCase):
         temp_file.close()
 
         result = subprocess.run(['python', 'resources/PelloTemp.py'], capture_output=True, text=True)
-        assert(result.stdout.strip() == "Hello World!")
+
+        self.assertEqual(result.stdout.strip(), "Hello, world!")
+
 
     def tearDown(self):
         self.cleanup_temp_file()

@@ -53,6 +53,7 @@ class TestAi(unittest.TestCase):
         print("----")
         print(message)
         print("----")
-        assert(message.startswith("diff"))
-        assert("-print('Hello World!')" in message)
-        assert("+print('Hello Hippo!')" in message)
+
+        self.assertTrue(message.startswith("diff"), f"{message} does not start with 'diff'")
+        self.assertIn("-print('Hello World!')", message)
+        self.assertIn("+print('Hello Hippo!')", message)
