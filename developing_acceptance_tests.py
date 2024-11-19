@@ -31,6 +31,8 @@ class DevelopingAcceptanceTests(unittest.TestCase):
         assistant = AiCoder()
         diff = assistant.make_diff(code, test_results)
 
+        print(diff)
+
         temp_file = open('resources/PelloTemp.py', 'w')
         temp_file.write(code)
         assistant.apply_diff(temp_file, diff)
@@ -46,6 +48,6 @@ class DevelopingAcceptanceTests(unittest.TestCase):
 
     def cleanup_temp_file(self):
         try:
-            os.remove('resources/PelloTemp.py')
+           os.remove('resources/PelloTemp.py')
         except OSError as e:
             print(f"Error: {e.strerror}")
