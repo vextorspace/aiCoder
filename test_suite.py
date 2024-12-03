@@ -1,5 +1,5 @@
 import unittest
-from ai import TestAi
+from ai_coder import TestAi
 
 import sys
 

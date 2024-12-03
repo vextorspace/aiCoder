@@ -1,7 +1,7 @@
 import os
 import unittest
 import subprocess
-from ai import Ai
+from ai_coder import AiCoder
 
 class DevelopingAcceptanceTests(unittest.TestCase):
 
@@ -28,10 +28,8 @@ class DevelopingAcceptanceTests(unittest.TestCase):
 
         FAILED (errors=1)
         """
-        assistant = Ai()
+        assistant = AiCoder()
         new_code = assistant.modify_code(code, test_results)
-
-        print(new_code)
 
         temp_file = open('resources/PelloTemp.py', 'w')
         temp_file.write(new_code)
