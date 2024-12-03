@@ -17,4 +17,4 @@ class TestHelloWorld(unittest.TestCase):
         self.assertEqual(captured_output.strip(), "Hello World!")
 
 if __name__ == '__main__':
-    unittest.main()
+    HelloWorld().print()

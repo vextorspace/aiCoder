@@ -1,4 +1,5 @@
 import os
+import subprocess
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
@@ -16,21 +17,19 @@ class Ai:
             openai_api_key=os.getenv("OPENAI_API_KEY")
         )
 
-    def get_code_diff(self, code, test_results):
+    def modify_code(self, code, test_results):
         prompt_template = """
                             You are a terse and efficient developer.
                             You make code work with minimal fuss.
                             You write short but descriptive names for functions.
                             You will not write the output with code block markers.
-                            Your task is to create a diff that will patch the current file to make the tests pass without modifying the tests.
+                            Your task is to modify the current code to make the tests pass. You may not modify the tests.
                                the current source file is: {code}
                                the test results are: {test_results}
 
-                            An example diff would be something like:
-                            diff
-                            @@ -1,3 +1,3 @@
-                            -print('Hello World!')
-                            +print('Hello Universe!')
+                            The output should not contain any extraneous description of what it is, only code written in the same language as the tests and original code.
+
+
                         """
 
         commit_prompt = ChatPromptTemplate.from_template(prompt_template)
@@ -47,15 +46,7 @@ class TestAi(unittest.TestCase):
         ai = Ai()
         assert(bool(os.getenv('OPENAI_API_KEY')))
 
-    def test_get_commit_message(self):
-        ai = Ai()
-        message = ai.get_code_diff("print('Hello World!')", "test failed because it should say Hello Hippo!")
-
-        self.assertTrue(message.startswith("diff"), f"{message} does not start with 'diff'")
-        self.assertIn("-print('Hello World!')", message)
-        self.assertIn("+print('Hello Hippo!')", message)
-
-    def test_get_commit_message_realistic(self):
+    def test_modify_code_realistic(self):
         ai = Ai()
         file = open("resources/Pello.py", "r")
         code = file.read()
@@ -72,8 +63,11 @@ class TestAi(unittest.TestCase):
             HelloWorld().print()
             ^^^^^^^^^^^^^^^^^^
         """
-        message = ai.get_code_diff(code, test_results)
+        new_code = ai.modify_code(code, test_results)
 
-        self.assertTrue(message.startswith("diff"), f"{message} does not start with 'diff'")
-        self.assertIn("+    def print(self):", message)
-        self.assertIn("+        print(\"Hello World!\")", message)
+        with open('resources/PelloTemp2.py', 'w') as file:
+                    file.write(new_code)
+
+        result = subprocess.run(['python', 'resources/PelloTemp2.py'], capture_output=True, text=True)
+
+        self.assertIn("Hello World!", result.stdout)

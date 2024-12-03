@@ -1,5 +1,4 @@
 import unittest
-from ai_coder import TestAiCoder
 from ai import TestAi
 
 import sys
@@ -8,7 +7,6 @@ def suite():
     suite = unittest.TestSuite()
     loader = unittest.TestLoader()
 
-    suite.addTests(loader.loadTestsFromTestCase(TestAiCoder))
     suite.addTests(loader.loadTestsFromTestCase(TestAi))
 
     return suite

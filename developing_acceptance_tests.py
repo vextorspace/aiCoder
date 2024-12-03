@@ -1,7 +1,7 @@
 import os
 import unittest
 import subprocess
-from ai_coder import AiCoder
+from ai import Ai
 
 class DevelopingAcceptanceTests(unittest.TestCase):
 
@@ -28,26 +28,15 @@ class DevelopingAcceptanceTests(unittest.TestCase):
 
         FAILED (errors=1)
         """
-        assistant = AiCoder()
-        diff = assistant.make_diff(code, test_results)
+        assistant = Ai()
+        new_code = assistant.modify_code(code, test_results)
 
-        print(diff)
+        print(new_code)
 
         temp_file = open('resources/PelloTemp.py', 'w')
-        temp_file.write(code)
-        assistant.apply_diff(temp_file, diff)
+        temp_file.write(new_code)
         temp_file.close()
 
         result = subprocess.run(['python', 'resources/PelloTemp.py'], capture_output=True, text=True)
 
-        self.assertEqual(result.stdout.strip(), "Hello, world!")
-
-
-    def tearDown(self):
-        self.cleanup_temp_file()
-
-    def cleanup_temp_file(self):
-        try:
-           os.remove('resources/PelloTemp.py')
-        except OSError as e:
-            print(f"Error: {e.strerror}")
+        self.assertEqual(result.stdout.strip(), "Hello World!")
