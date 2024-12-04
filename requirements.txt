@@ -13,4 +13,3 @@ python-dotenv
 faiss-cpu
 gradio
 pytest
-pydantic
