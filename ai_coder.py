@@ -28,6 +28,9 @@ class AiCoder:
                                the test results are: {test_results}
 
                             The output should not contain any extraneous description of what it is, only code written in the same language as the tests and original code.
+
+                            make sure to include the original tests un-modified and do not modify any code that does not need to be modified. In all cases, the code comes before the tests.
+                     
                         """
 
         commit_prompt = ChatPromptTemplate.from_template(prompt_template)
