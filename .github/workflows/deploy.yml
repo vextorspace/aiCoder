@@ -31,7 +31,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: python-cli
+          name: ai_coder_linux
           path: dist/ai_coder
 
   build-macos:
@@ -53,7 +53,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: python-cli
+          name: ai_coder_macos
           path: dist/ai_coder
 
   build-windows:
@@ -74,5 +74,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: python-cli
+          name: ai_coder_windows
           path: dist/ai_coder.exe
